@@ -1,7 +1,3 @@
-# from http://webpy.org/docs/0.3/tutorial
-# runs on http://0.0.0.0:8080/
-# documents at https://drive.google.com/drive/folders/0BxJ1w5Qhdj4STFJRLUdWS2FXUm8
-
 import web
 
 render = web.template.render('templates/')

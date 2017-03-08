@@ -37,6 +37,8 @@ git config --global push.default simple
 
 git clone https://github.com/zknibb/it-350-project.git
 
+cd it-350-project
+
 git add web.py/
 
 git commit -m "commit added files"
