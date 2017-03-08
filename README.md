@@ -6,6 +6,8 @@ runs on http://0.0.0.0:8080/
 
 documents at https://drive.google.com/drive/folders/0BxJ1w5Qhdj4STFJRLUdWS2FXUm8
 
+GitHub Cheat Sheet https://services.github.com/on-demand/downloads/github-git-cheat-sheet.pdf
+
 
 pip install web.py
 
