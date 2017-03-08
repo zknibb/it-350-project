@@ -39,6 +39,8 @@ git clone https://github.com/zknibb/it-350-project.git
 
 git add web.py/
 
-git commit -m "Initial upload after install of web.py"
+git commit -m "commit added files"
+
+git commit -a -m "commit all changes"
 
 git push
