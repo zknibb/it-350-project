@@ -46,3 +46,5 @@ git commit -m "commit added files"
 git commit -a -m "commit all changes"
 
 git push
+
+checking how to pull
