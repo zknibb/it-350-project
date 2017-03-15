@@ -48,3 +48,5 @@ git commit -a -m "commit all changes"
 git push
 
 sudo rsync -av /var/lib/mysql /home/linux/it-350-project/dbbak
+
+sudo zip -r dbbak.zip dbbak
