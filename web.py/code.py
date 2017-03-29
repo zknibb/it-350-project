@@ -5,8 +5,11 @@ render = web.template.render('templates/')
 db = web.database(dbn='mysql', user='root', pw='linux', db='police')
 
 urls = (
+    '/(.*)/', 'redirect',
     '/', 'police_dept',
     '/add', 'add',
+    '/delete', 'delete',
+    '/update', 'update',
     '/cases', 'cases',
     '/cruisers', 'cruisers',
     '/detectives', 'detectives',
@@ -18,6 +21,10 @@ urls = (
     '/support_personnel', 'support_personnel'
 )
 
+class redirect:
+    def GET(self, path):
+        web.seeother('/' + path)
+
 class police_dept:
     def GET(self):
         todos = db.select('todo')
@@ -27,6 +34,19 @@ class add:
     def POST(self):
         i = web.input()
         n = db.insert('todo', title=i.title)
+        raise web.seeother('/')
+
+class delete:
+    def POST(self):
+        i = web.input()
+        n = db.delete('todo', where="id=" + i.primeKey)
+        raise web.seeother('/')
+
+class update:
+    def POST(self):
+        i = web.input()
+        v = i.column
+        n = db.update('todo', where="id=" + i.primeKey, Done = i.value)
         raise web.seeother('/')
 
 class cases:
