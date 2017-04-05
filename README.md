@@ -8,6 +8,8 @@ documents at https://drive.google.com/drive/folders/0BxJ1w5Qhdj4STFJRLUdWS2FXUm8
 
 GitHub Cheat Sheet https://services.github.com/on-demand/downloads/github-git-cheat-sheet.pdf
 
+Web.py commands http://webpy.readthedocs.io/en/latest/db.html
+
 
 pip install web.py
 

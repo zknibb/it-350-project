@@ -11,16 +11,13 @@ urls = (
     '/delete', 'delete',
     '/update', 'update',
     '/cases', 'cases',
-    '/cruisers', 'cruisers',
     '/detectives', 'detectives',
     '/divisions', 'divisions',
     '/addDivision', 'addDivision',
     '/delDivision', 'delDivision',
-    '/leadership', 'leadership',
-    '/officers', 'officers',
-    '/radios', 'radios',
-    '/sidearms', 'sidearms',
-    '/support_personnel', 'support_personnel'
+    '/response', 'response',
+    '/addResponse', 'addResponse',
+    '/delResponse', 'delResponse'
 )
 
 class redirect:
@@ -56,11 +53,6 @@ class cases:
         todos = db.select('todo')
         return render.cases(todos)
 
-class cruisers:
-    def GET(self):
-        todos = db.select('todo')
-        return render.cruisers(todos)
-
 class detectives:
     def GET(self):
         todos = db.select('todo')
@@ -80,33 +72,27 @@ class addDivision:
 class delDivision:
     def POST(self):
         i = web.input()
-        n = db.delete('Divisions', where="title=" + i.primeKey)
+        db.query("DELETE FROM Divisions WHERE title='" + i.primeKey + "'")
         raise web.seeother('/divisions')
 
-class leadership:
+class response:
     def GET(self):
-        todos = db.select('todo')
-        return render.leadership(todos)
+        respond = db.select('Respond')
+        officers = db.select('Officers')
+        incidents = db.select('Incidents')
+        return render.response(respond, officers, incidents)
 
-class officers:
-    def GET(self):
-        todos = db.select('todo')
-        return render.officers(todos)
+class addResponse:
+    def POST(self):
+        i = web.input()
+        n = db.insert('Respond', officerId=i.offi, incidentId=i.inci)
+        raise web.seeother('/response')
 
-class radios:
-    def GET(self):
-        todos = db.select('todo')
-        return render.radios(todos)
-
-class sidearms:
-    def GET(self):
-        todos = db.select('todo')
-        return render.sidearms(todos)
-
-class support_personnel:
-    def GET(self):
-        todos = db.select('todo')
-        return render.support_personnel(todos)
+class delResponse:
+    def POST(self):
+        i = web.input()
+        db.query("DELETE FROM Respond WHERE officerId='" + i.offi + "' AND incidentId='" + i.inci + "'")
+        raise web.seeother('/response')
 
 if __name__ == "__main__":
     app = web.application(urls, globals())

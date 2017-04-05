@@ -1,4 +1,4 @@
-$def with (todos)
+$def with (respond, officers, incidents)
 <head>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -26,7 +26,7 @@ $def with (todos)
         }
     </style>
 
-    <title>divisions</title>
+    <title>response</title>
 </head>
 <body class="bd" background="http://kingofwallpapers.com/police-background-images/police-background-images-002.jpg">
     <nav class="navbar navbar-inverse">
@@ -47,7 +47,7 @@ $def with (todos)
       </div>
     </nav>
 
-    <h1 class="custom-white">Divisions</h1>
+    <h1 class="custom-white">Response</h1>
     <br>
     <br>
     <br>
@@ -56,16 +56,19 @@ $def with (todos)
   <table class="table custom-white">
     <thead>
       <tr>
-        <th>Title</th>
+        <th>Officer ID</th>
+        <th>Incident ID</th>
       </tr>
     </thead>
     <tbody>
-    $for todo in todos:
-        <tr id="row$todo.title">
-            <td>$todo.title</td>
+    $for entry in respond:
+        <tr id="row$entry.officerId">
+            <td>$entry.officerId</td>
+            <td>$entry.incidentId</td>
             <td>
-              <form method="post" action="delDivision">
-                <input type="hidden" name="primeKey" value="$todo.title" />
+              <form method="post" action="delResponse">
+                <input type="hidden" name="offi" value="$entry.officerId" />
+                <input type="hidden" name="inci" value="$entry.incidentId" />
                 <input class="form-control" type="submit" value="Remove" />
               </form>
             </td>
@@ -73,10 +76,17 @@ $def with (todos)
     </tbody>
   </table>
 </div>
-
 <div class="center">
-    <form method="post" action="addDivision">
-        <input type="text" name="title" placeholder="Division name" /> <input type="submit" value="Add" />
+    <form method="post" action="addResponse" id="addResponse">
+    $for off in officers:
+        <select form="addResponse">
+            <option value="$off.officerId">$off.officerId</option>
+        </select>
+    $for inc in incidents:
+        <select form="addResponse">
+            <option value="$inc.incidentId">$inc.incidentId</option>
+        </select>
+        <input type="submit" value="Add" />
     </form>
 </div>
 </body>
