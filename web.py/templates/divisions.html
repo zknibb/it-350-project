@@ -10,8 +10,11 @@ $def with (todos)
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <style>
-        .custom-color {
+        .custom-white {
             color: white;
+        }
+        .custom-black {
+            color: black;
         }
         h1 {
             text-align: center;
@@ -44,32 +47,25 @@ $def with (todos)
       </div>
     </nav>
 
-    <h1 class="custom-color">Divisions</h1>
+    <h1 class="custom-white">Divisions</h1>
     <br>
     <br>
     <br>
 
-<div class="container custom-color">
-  <table class="table custom-color">
+<div class="container custom-white">
+  <table class="table custom-white">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Title</th>
-        <th>Created</th>
-        <th>Done</th>
-        <th>Remove</th>
       </tr>
     </thead>
     <tbody>
     $for todo in todos:
-        <tr id="row$todo.id">
-            <td>$todo.id</td>
+        <tr id="row$todo.title">
             <td>$todo.title</td>
-            <td>$todo.created</td>
-            <td>$todo.done</td>
             <td>
-              <form method="post" action="delete">
-                <input type="hidden" name="primeKey" value=$todo.id /> <input class="form-control" type="submit" name=$todo.id value="Remove" />
+              <form method="post" action="delDivision">
+                <p><input type="hidden" name="primeKey" value="$todo.title" /> <input class="form-control" type="submit" name="$todo.title" value="$todo.title" /></p>
               </form>
             </td>
         </tr>
@@ -78,7 +74,7 @@ $def with (todos)
 </div>
 
 <div class="center">
-    <form method="post" action="add">
+    <form method="post" action="addDivision">
         <input type="text" name="title" placeholder="Division name" /> <input type="submit" value="Add" />
     </form>
 </div>

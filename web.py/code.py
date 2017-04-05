@@ -14,6 +14,8 @@ urls = (
     '/cruisers', 'cruisers',
     '/detectives', 'detectives',
     '/divisions', 'divisions',
+    '/addDivision', 'addDivision',
+    '/delDivision', 'delDivision',
     '/leadership', 'leadership',
     '/officers', 'officers',
     '/radios', 'radios',
@@ -66,8 +68,20 @@ class detectives:
 
 class divisions:
     def GET(self):
-        todos = db.select('todo')
+        todos = db.select('Divisions')
         return render.divisions(todos)
+
+class addDivision:
+    def POST(self):
+        i = web.input()
+        n = db.insert('Divisions', title=i.title, deptId=1)
+        raise web.seeother('/divisions')
+
+class delDivision:
+    def POST(self):
+        i = web.input()
+        n = db.delete('Divisions', where="title=" + i.primeKey)
+        raise web.seeother('/divisions')
 
 class leadership:
     def GET(self):
