@@ -20,6 +20,7 @@ $def with (todos)
         <th>Title</th>
         <th>Created</th>
         <th>Done</th>
+        <th>Remove</th>
       </tr>
     </thead>
     <tbody>
@@ -29,6 +30,11 @@ $def with (todos)
             <td>$todo.title</td>
             <td>$todo.created</td>
             <td>$todo.done</td>
+            <td>
+              <form method="post" action="delete">
+                <p><input type="hidden" name="primeKey" value=$todo.id /> <input class="form-control" type="submit" name=$todo.id value="Remove" /></p>
+              </form>
+            </td>
         </tr>
     </tbody>
   </table>

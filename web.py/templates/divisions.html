@@ -1,10 +1,85 @@
 $def with (todos)
-<title>divisions</title>
-<ul>
-$for todo in todos:
-    <li id="t$todo.id">$todo.title</li>
-</ul>
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-<form method="post" action="add">
-<p><input type="text" name="title" /> <input type="submit" value="Add" /></p>
-</form>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        .custom-color {
+            color: white;
+        }
+        h1 {
+            text-align: center;
+            font-size: 400%;
+        }
+        .center {
+            margin: auto;
+            width: 59%;
+        }
+    </style>
+
+    <title>divisions</title>
+</head>
+<body class="bd" background="http://kingofwallpapers.com/police-background-images/police-background-images-002.jpg">
+    <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="divisions">Divisions</a></li>
+          <li><a href="personnel">Personnel</a></li>
+          <li><a href="response">Response</a></li>
+          <li><a href="detectives">Detectives</a></li>
+          <li><a href="assignments">Assignments</a></li>
+          <li><a href="incidents">Incidents</a></li>
+          <li><a href="cases">Cases</a></li>
+          <li><a href="equipment">Equipment</a></li>
+          <li><a href="suspidence">Suspects & Evidence</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <h1 class="custom-color">Divisions</h1>
+    <br>
+    <br>
+    <br>
+
+<div class="container custom-color">
+  <table class="table custom-color">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Created</th>
+        <th>Done</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+    $for todo in todos:
+        <tr id="row$todo.id">
+            <td>$todo.id</td>
+            <td>$todo.title</td>
+            <td>$todo.created</td>
+            <td>$todo.done</td>
+            <td>
+              <form method="post" action="delete">
+                <input type="hidden" name="primeKey" value=$todo.id /> <input class="form-control" type="submit" name=$todo.id value="Remove" />
+              </form>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="center">
+    <form method="post" action="add">
+        <input type="text" name="title" placeholder="Division name" /> <input type="submit" value="Add" />
+    </form>
+</div>
+</body>
