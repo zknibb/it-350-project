@@ -1,0 +1,147 @@
+$def with (lead, off, supp)
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        .custom-white {
+            color: white;
+        }
+        .custom-black {
+            color: black;
+        }
+        h1 {
+            text-align: center;
+            font-size: 400%;
+        }
+        .center {
+            margin: auto;
+            width: 59%;
+        }
+    </style>
+
+    <title>personnel</title>
+</head>
+<body class="bd" background="http://kingofwallpapers.com/police-background-images/police-background-images-002.jpg">
+    <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="divisions">Divisions</a></li>
+          <li><a href="personnel">Personnel</a></li>
+          <li><a href="response">Response</a></li>
+          <li><a href="detectives">Detectives</a></li>
+          <li><a href="assignments">Assignments</a></li>
+          <li><a href="incidents">Incidents</a></li>
+          <li><a href="cases">Cases</a></li>
+          <li><a href="equipment">Equipment</a></li>
+          <li><a href="suspidence">Suspects & Evidence</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <h1 class="custom-white">Personnel</h1>
+    <br>
+    <br>
+    <br>
+
+<div class="container custom-white">
+    <h2 class="custom-white">Officers</h2>
+  <table class="table custom-white">
+    <thead>
+      <tr>
+        <th>Officer ID</th>
+        <th>Last Name</th>
+        <th>First Name</th>
+        <th>Rank</th>
+        <th>Division</th>
+      </tr>
+    </thead>
+    <tbody>
+$for entry in off:
+        <tr id="row$entry.officerId">
+            <td>$entry.officerId</td>
+            <td>$entry.lastName</td>
+            <td>$entry.firstName</td>
+            <td>$entry.rank</td>
+            <td>$entry.title</td>
+            <td>
+              <form method="post" action="delOfficer">
+                <input type="hidden" name="offId" value="$entry.officerId" />
+                <input class="form-control" type="submit" value="Remove" />
+              </form>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="center">
+    <form method="post" action="addOfficer">
+        <input type="text" name="last" placeholder="Officer last name" /> 
+        <input type="text" name="first" placeholder="Officer first name" />
+        <input type="text" name="divi" placeholder="Division" /> 
+        <input type="submit" value="Add" />
+    </form>
+    <form method="post" action="updateOfficer" id="updateOfficer">
+        <input type="text" name="offid" placeholder="Officer ID" /> 
+        <select form="updateOfficer" name="rank">
+            <option value="Officer">Officer</option>
+            <option value="Corporal">Corporal</option>
+            <option value="Sergeant">Sergeant</option>
+            <option value="Lieutenant">Lieutenant</option>
+            <option value="Captain">Captain</option>
+        </select>
+        <input type="submit" value="Promote" />
+    </form>
+</div>
+
+<br>
+<br>
+
+<div class="container custom-white">
+    <h2 class="custom-white">Support Personnel</h2>
+  <table class="table custom-white">
+    <thead>
+      <tr>
+        <th>Employee ID</th>
+        <th>Last Name</th>
+        <th>First Name</th>
+        <th>Division</th>
+      </tr>
+    </thead>
+    <tbody>
+$for entry in supp:
+        <tr id="row$entry.empId">
+            <td>$entry.empId</td>
+            <td>$entry.lastName</td>
+            <td>$entry.firstName</td>
+            <td>$entry.title</td>
+            <td>
+              <form method="post" action="delSupport">
+                <input type="hidden" name="empId" value="$entry.empId" />
+                <input class="form-control" type="submit" value="Remove" />
+              </form>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="center">
+    <form method="post" action="addSupport">
+        <input type="text" name="last" placeholder="Support last name" /> 
+        <input type="text" name="first" placeholder="Support first name" />
+        <input type="text" name="divi" placeholder="Division" /> 
+        <input type="submit" value="Add" />
+    </form>
+</div>
+
+</body>

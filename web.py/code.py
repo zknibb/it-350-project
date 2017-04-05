@@ -15,6 +15,12 @@ urls = (
     '/divisions', 'divisions',
     '/addDivision', 'addDivision',
     '/delDivision', 'delDivision',
+    '/personnel', 'personnel',
+    '/addOfficer', 'addOfficer',
+    '/delOfficer', 'delOfficer',
+    '/updateOfficer', 'updateOfficer',
+    '/addSupport', 'addSupport',
+    '/delSupport', 'delSupport',
     '/response', 'response',
     '/addResponse', 'addResponse',
     '/delResponse', 'delResponse'
@@ -93,6 +99,43 @@ class delResponse:
         i = web.input()
         db.query("DELETE FROM Respond WHERE officerId='" + i.offi + "' AND incidentId='" + i.inci + "'")
         raise web.seeother('/response')
+
+class personnel:
+    def GET(self):
+        lead = db.select('Leadership')
+        offi = db.select('Officers')
+        supp = db.select('Support_Personnel')
+        return render.personnel(lead, offi, supp)
+
+class addOfficer:
+    def POST(self):
+        i = web.input()
+        n = db.insert('Officers', lastName=i.last, firstName=i.first, rank='Officer', title=i.divi)
+        raise web.seeother('/personnel')
+
+class updateOfficer:
+    def POST(self):
+        i = web.input()
+        n = db.query("UPDATE Officers SET rank='" + i.rank + "' WHERE officerId=" + i.offid)
+        raise web.seeother('/personnel')
+
+class delOfficer:
+    def POST(self):
+        i = web.input()
+        db.query("DELETE FROM Officers WHERE officerId=" + i.offId)
+        raise web.seeother('/personnel')
+
+class addSupport:
+    def POST(self):
+        i = web.input()
+        n = db.insert('Support_Personnel', lastName=i.last, firstName=i.first, title=i.divi)
+        raise web.seeother('/personnel')
+
+class delSupport:
+    def POST(self):
+        i = web.input()
+        db.query("DELETE FROM Support_Personnel WHERE empId=" + i.empId)
+        raise web.seeother('/personnel')
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
