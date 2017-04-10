@@ -1,4 +1,4 @@
-$def with (case,sus,evi)
+$def with (assign, detect, case)
 <head>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -26,7 +26,7 @@ $def with (case,sus,evi)
         }
     </style>
 
-    <title>cases</title>
+    <title>assignments</title>
 </head>
 <body class="bd" background="http://kingofwallpapers.com/police-background-images/police-background-images-002.jpg">
     <nav class="navbar navbar-inverse">
@@ -47,7 +47,7 @@ $def with (case,sus,evi)
       </div>
     </nav>
 
-    <h1 class="custom-white">Cases</h1>
+    <h1 class="custom-white">Assignments</h1>
     <br>
     <br>
     <br>
@@ -56,34 +56,20 @@ $def with (case,sus,evi)
   <table class="table custom-white">
     <thead>
       <tr>
-        <th>Case ID</th>
-        <th>Offense</th>
-        <th>Suspects</th>
-        <th>Evidence</th>
-        <th>Solved</th>
+        <th>Badge Number</th>
+        <th>Case Number</th>
       </tr>
     </thead>
     <tbody>
-    $for entry in case:
-        <tr id="row$entry.caseNo">
+    $for entry in assign:
+        <tr id="row$entry.badgeNo">
+            <td>$entry.badgeNo</td>
             <td>$entry.caseNo</td>
-            <td>$entry.offense</td>
             <td>
-                $for list in sus:
-                    $list.susId 
-            </td>
-            <td>
-                $for more in evi:
-                    $more.evId
-            </td>
-            $if (entry.solved == 0):
-                <td>No</td>
-            $else:
-                <td>Yes</td>
-            <td>
-              <form method="post" action="solveCase">
+              <form method="post" action="delAssignment">
+                <input type="hidden" name="badgeNo" value="$entry.badgeNo" />
                 <input type="hidden" name="caseNo" value="$entry.caseNo" />
-                <input class="form-control" type="submit" value="Solved?" />
+                <input class="form-control" type="submit" value="Remove" />
               </form>
             </td>
         </tr>
@@ -91,14 +77,16 @@ $def with (case,sus,evi)
   </table>
 </div>
 <div class="center">
-    <form method="post" action="addCase" id="addCase">
-        <input type="text" name="off" placeholder="Offense" /> 
-        <input type="submit" value="Add" />
-    </form>
-</div>
-<div class="center">
-    <form method="post" action="addCase" id="addCase">
-        <input type="text" name="off" placeholder="Offense" /> 
+    <form method="post" action="addAssignment" id="addAssignment">
+        <select form="addAssignment" name="badgeNo">
+            $for det in detect:
+            <option value="$det.badgeNo">$det.badgeNo</option>
+        </select>
+    
+        <select form="addAssignment" name="caseNo">
+            $for cas in case:
+            <option value="$cas.caseNo">$cas.caseNo</option>
+        </select>
         <input type="submit" value="Add" />
     </form>
 </div>
