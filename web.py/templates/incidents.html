@@ -1,4 +1,4 @@
-$def with (case,sus,evi)
+$def with (inci)
 <head>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -26,7 +26,7 @@ $def with (case,sus,evi)
         }
     </style>
 
-    <title>cases</title>
+    <title>incidents</title>
 </head>
 <body class="bd" background="http://kingofwallpapers.com/police-background-images/police-background-images-002.jpg">
     <nav class="navbar navbar-inverse">
@@ -47,7 +47,7 @@ $def with (case,sus,evi)
       </div>
     </nav>
 
-    <h1 class="custom-white">Cases</h1>
+    <h1 class="custom-white">Incidents</h1>
     <br>
     <br>
     <br>
@@ -56,34 +56,21 @@ $def with (case,sus,evi)
   <table class="table custom-white">
     <thead>
       <tr>
-        <th>Case ID</th>
-        <th>Offense</th>
-        <th>Suspects</th>
-        <th>Evidence</th>
-        <th>Solved</th>
+        <th>Incident ID</th>
+        <th>Description</th>
+        <th>Location</th>
       </tr>
     </thead>
     <tbody>
-    $for entry in case:
-        <tr id="row$entry.caseNo">
-            <td>$entry.caseNo</td>
-            <td>$entry.offense</td>
+    $for entry in inci:
+        <tr id="row$entry.incidentId">
+            <td>$entry.incidentId</td>
+            <td>$entry.description</td>
+            <td>$entry.location</td>
             <td>
-                $for list in sus:
-                    $list.susId 
-            </td>
-            <td>
-                $for more in evi:
-                    $more.evId
-            </td>
-            $if (entry.solved == 0):
-                <td>No</td>
-            $else:
-                <td>Yes</td>
-            <td>
-              <form method="post" action="solveCase">
-                <input type="hidden" name="caseNo" value="$entry.caseNo" />
-                <input class="form-control" type="submit" value="Solved?" />
+              <form method="post" action="resolveIncident">
+                <input type="hidden" name="inciId" value="$entry.incidentId" />
+                <input class="form-control" type="submit" value="Remove" />
               </form>
             </td>
         </tr>
@@ -91,8 +78,9 @@ $def with (case,sus,evi)
   </table>
 </div>
 <div class="center">
-    <form method="post" action="addCase" id="addCase">
-        <input type="text" name="off" placeholder="Offense" /> 
+    <form method="post" action="addIncident" id="addIncident">
+        <input type="text" name="desc" placeholder="Description" /> 
+        <input type="text" name="loc" placeholder="Location" /> 
         <input type="submit" value="Add" />
     </form>
 </div>

@@ -11,6 +11,8 @@ urls = (
     '/delete', 'delete',
     '/update', 'update',
     '/cases', 'cases',
+    '/addCase','addCase',
+    '/solveCase', 'solveCase',
     '/detectives', 'detectives',
     '/divisions', 'divisions',
     '/addDivision', 'addDivision',
@@ -23,7 +25,10 @@ urls = (
     '/delSupport', 'delSupport',
     '/response', 'response',
     '/addResponse', 'addResponse',
-    '/delResponse', 'delResponse'
+    '/delResponse', 'delResponse',
+    '/incidents', 'incidents',
+    '/addIncident', 'addIncident',
+    '/resolveIncident', 'resolveIncident',
 )
 
 class redirect:
@@ -136,6 +141,42 @@ class delSupport:
         i = web.input()
         db.query("DELETE FROM Support_Personnel WHERE empId=" + i.empId)
         raise web.seeother('/personnel')
+
+class incidents:
+    def GET(self):
+        inci = db.select('Incidents')
+        return render.incidents(inci)
+
+class addIncident:
+    def POST(self):
+        i = web.input()
+        n = db.insert('Incidents', description=i.desc, location=i.loc)
+        raise web.seeother('/incidents')
+
+class resolveIncident:
+    def POST(self):
+        i = web.input()
+        db.query("DELETE FROM Incidents WHERE incidentId=" + i.inciId)
+        raise web.seeother('/incidents')
+
+class cases:
+    def GET(self):
+        case = db.select('Cases')
+        sus = db.select('Suspect')
+        evi = db.select('Evidence')
+        return render.cases(case,sus,evi)
+
+class addCase:
+    def POST(self):
+        i = web.input()
+        n = db.insert('Cases', offense=i.off, solved=0)
+        raise web.seeother('/cases')
+
+class solveCase:
+    def POST(self):
+        i = web.input()
+        db.query("UPDATE Cases SET solved=1 WHERE caseNo=" + i.caseNo)
+        raise web.seeother('/cases')
 
 if __name__ == "__main__":
     app = web.application(urls, globals())

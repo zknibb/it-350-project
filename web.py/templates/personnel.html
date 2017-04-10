@@ -53,6 +53,32 @@ $def with (lead, off, supp)
     <br>
 
 <div class="container custom-white">
+    <h2 class="custom-white">Leadership</h2>
+  <table class="table custom-white">
+    <thead>
+      <tr>
+        <th>Employee ID</th>
+        <th>Last Name</th>
+        <th>First Name</th>
+        <th>Rank</th>
+      </tr>
+    </thead>
+    <tbody>
+$for entry in lead:
+        <tr id="row$entry.empId">
+            <td>$entry.empId</td>
+            <td>$entry.lastName</td>
+            <td>$entry.firstName</td>
+            <td>$entry.title</td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<br>
+
+<div class="container custom-white">
     <h2 class="custom-white">Officers</h2>
   <table class="table custom-white">
     <thead>
