@@ -1,0 +1,202 @@
+$def with (cruise, rad, side)
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        .custom-white {
+            color: white;
+        }
+        .custom-black {
+            color: black;
+        }
+        h1 {
+            text-align: center;
+            font-size: 400%;
+        }
+        .center {
+            margin: auto;
+            width: 59%;
+        }
+    </style>
+
+    <title>equipment</title>
+</head>
+<body class="bd" background="http://kingofwallpapers.com/police-background-images/police-background-images-002.jpg">
+    <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="divisions">Divisions</a></li>
+          <li><a href="personnel">Personnel</a></li>
+          <li><a href="response">Response</a></li>
+          <li><a href="detectives">Detectives</a></li>
+          <li><a href="assignments">Assignments</a></li>
+          <li><a href="incidents">Incidents</a></li>
+          <li><a href="cases">Cases</a></li>
+          <li><a href="equipment">Equipment</a></li>
+          <li><a href="suspidence">Suspects & Evidence</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <h1 class="custom-white">Equipment</h1>
+    <br>
+    <br>
+    <br>
+
+<div class="container custom-white">
+    <h2 class="custom-white">Cruisers</h2>
+  <table class="table custom-white">
+    <thead>
+      <tr>
+        <th>VIN</th>
+        <th>Model</th>
+        <th>Assigned Officer ID</th>
+      </tr>
+    </thead>
+    <tbody>
+$for entry in cruise:
+        <tr id="row$entry.vin">
+            <td>$entry.vin</td>
+            <td>$entry.model</td>
+            <td>$entry.officerId</td>
+            <td>
+              <form method="post" action="unassignCruiser">
+                <input type="hidden" name="vin" value="$entry.vin" />
+                <input class="form-control" type="submit" value="Unassign Cruiser" />
+              </form>
+            </td>
+            <td>
+              <form method="post" action="deleteCruiser">
+                <input type="hidden" name="vin" value="$entry.vin" />
+                <input class="form-control" type="submit" value="Delete Cruiser" />
+              </form>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="center">
+    <form method="post" action="addCruiser">
+        <input type="text" name="model" placeholder="Model" /> 
+        <input type="submit" value="Add" />
+    </form>
+</div>
+
+<div class="center">
+    <form method="post" action="assignCruiser" id="assignCruiser">
+     <input type="text" name="vin" placeholder="VIN" /> 
+        <input type="text" name="officerId" placeholder="Officer ID" /> 
+        <input type="submit" value="Assign" />
+    </form>
+</div>
+
+<br>
+<br>
+
+<div class="container custom-white">
+    <h2 class="custom-white">Radios</h2>
+  <table class="table custom-white">
+    <thead>
+      <tr>
+        <th>Radio ID</th>
+        <th>Assigned Officer ID</th>
+      </tr>
+    </thead>
+    <tbody>
+$for entry in rad:
+        <tr id="row$entry.radioId">
+            <td>$entry.radioId</td>
+            <td>$entry.officerId</td>
+            <td>
+              <form method="post" action="unassignRadio">
+                <input type="hidden" name="radioId" value="$entry.radioId" />
+                <input class="form-control" type="submit" value="Unassign Radio" />
+              </form>
+            </td>
+            <td>
+              <form method="post" action="deleteRadio">
+                <input type="hidden" name="radioId" value="$entry.radioId" />
+                <input class="form-control" type="submit" value="Delete Radio" />
+              </form>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="center">
+    <form method="post" action="addRadio">
+        <input type="submit" value="Add Radio" />
+    </form>
+</div>
+
+<div class="center">
+    <form method="post" action="assignRadio" id="assignRadio">
+     <input type="text" name="radioId" placeholder="Radio ID" /> 
+        <input type="text" name="officerId" placeholder="Officer ID" /> 
+        <input type="submit" value="Assign" />
+    </form>
+</div>
+
+
+<br>
+<br>
+
+<div class="container custom-white">
+    <h2 class="custom-white">Sidearms</h2>
+  <table class="table custom-white">
+    <thead>
+      <tr>
+        <th>Serial Number</th>
+        <th>Type</th>
+        <th>Assigned Officer ID</th>
+      </tr>
+    </thead>
+    <tbody>
+$for entry in side:
+        <tr id="row$entry.serialNo">
+            <td>$entry.serialNo</td>
+            <td>$entry.type</td>
+            <td>$entry.officerId</td>
+            <td>
+              <form method="post" action="unassignSidearm">
+                <input type="hidden" name="serialNo" value="$entry.serialNo" />
+                <input class="form-control" type="submit" value="Unassign Sidearm" />
+              </form>
+            </td>
+            <td>
+              <form method="post" action="deleteSidearm">
+                <input type="hidden" name="serialNo" value="$entry.serialNo" />
+                <input class="form-control" type="submit" value="Delete Sidearm" />
+              </form>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+<div class="center">
+    <form method="post" action="addSidearm">
+        <input type="text" name="type" placeholder="Type" /> 
+        <input type="submit" value="Add" />
+    </form>
+</div>
+
+<div class="center">
+    <form method="post" action="assignSidearm" id="assignSidearm">
+     <input type="text" name="serialNo" placeholder="Serial Number" /> 
+        <input type="text" name="officerId" placeholder="Officer ID" /> 
+        <input type="submit" value="Assign" />
+    </form>
+</div>
+
+</body>

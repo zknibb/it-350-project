@@ -6,14 +6,12 @@ db = web.database(dbn='mysql', user='root', pw='linux', db='police')
 
 urls = (
     '/(.*)/', 'redirect',
-    '/', 'police_dept',
-    '/add', 'add',
-    '/delete', 'delete',
-    '/update', 'update',
     '/cases', 'cases',
     '/addCase','addCase',
     '/solveCase', 'solveCase',
     '/detectives', 'detectives',
+    '/addDet', 'addDet',
+    '/delDet', 'delDet',
     '/divisions', 'divisions',
     '/addDivision', 'addDivision',
     '/delDivision', 'delDivision',
@@ -38,36 +36,25 @@ urls = (
     '/removeSus', 'removeSus',
     '/removeEv', 'removeEv',
     '/assignSus', 'assignSus',
-    '/assignEv', 'assignEv'
+    '/assignEv', 'assignEv',
+    '/equipment', 'equipment',
+    '/addCruiser', 'addCruiser',
+    '/deleteCruiser', 'deleteCruiser',
+    '/addRadio', 'addRadio',
+    '/deleteRadio', 'deleteRadio',
+    '/addSidearm', 'addSidearm',
+    '/deleteSidearm', 'deleteSidearm',
+    '/assignCruiser', 'assignCruiser',
+    '/assignRadio', 'assignRadio',
+    '/assignSidearm', 'assignSidearm',
+    '/unassignCruiser', 'unassignCruiser',
+    '/unassignSidearm','unassignSidearm',
+    '/unassignRadio', 'unassignRadio'
 )
 
 class redirect:
     def GET(self, path):
         web.seeother('/' + path)
-
-class police_dept:
-    def GET(self):
-        todos = db.select('todo')
-        return render.police_dept(todos)
-
-class add:
-    def POST(self):
-        i = web.input()
-        n = db.insert('todo', title=i.title)
-        raise web.seeother('/')
-
-class delete:
-    def POST(self):
-        i = web.input()
-        n = db.delete('todo', where="id=" + i.primeKey)
-        raise web.seeother('/')
-
-class update:
-    def POST(self):
-        i = web.input()
-        v = i.column
-        n = db.update('todo', where="id=" + i.primeKey, Done = i.value)
-        raise web.seeother('/')
 
 class cases:
     def GET(self):
@@ -76,8 +63,20 @@ class cases:
 
 class detectives:
     def GET(self):
-        todos = db.select('todo')
-        return render.detectives(todos)
+        det = db.select('Detectives')
+        return render.detectives(det)
+
+class addDet:
+    def POST(self):
+        i = web.input()
+        n = db.insert('Detectives', deptId=1, lastName=i.last, firstName=i.first)
+        raise web.seeother('/detectives')
+
+class delDet:
+    def POST(self):
+        i = web.input()
+        db.query("DELETE FROM Detectives WHERE badgeNo='" + i.badgeNo + "'")
+        raise web.seeother('/detectives')
 
 class divisions:
     def GET(self):
@@ -242,6 +241,85 @@ class removeEv:
         i = web.input()
         db.query("DELETE FROM Evidence WHERE evId=" + i.evId)
         raise web.seeother('/suspidence')
+
+class equipment:
+    def GET(self):
+        cruise = db.select('Cruisers')
+        rad = db.select('Radios')
+        side = db.select('Sidearms')
+        return render.equipment(cruise, rad, side)
+
+class assignRadio:
+    def POST(self):
+        i = web.input()
+        db.query("UPDATE Radios SET officerId=" + i.officerId + " WHERE radioId=" + i.radioId)
+        raise web.seeother('/equipment')
+
+class assignCruiser:
+    def POST(self):
+        i = web.input()
+        db.query("UPDATE Cruisers SET officerId=" + i.officerId + " WHERE vin=" + i.vin)
+        raise web.seeother('/equipment')
+
+class assignSidearm:
+    def POST(self):
+        i = web.input()
+        db.query("UPDATE Sidearms SET officerId=" + i.officerId + " WHERE serialNo=" + i.serialNo)
+        raise web.seeother('/equipment')
+
+class unassignRadio:
+    def POST(self):
+        i = web.input()
+        db.query("UPDATE Radios SET officerId=NULL WHERE radioId=" + i.radioId)
+        raise web.seeother('/equipment')
+
+class unassignCruiser:
+    def POST(self):
+        i = web.input()
+        db.query("UPDATE Cruisers SET officerId=NULL WHERE vin=" + i.vin)
+        raise web.seeother('/equipment')
+
+class unassignSidearm:
+    def POST(self):
+        i = web.input()
+        db.query("UPDATE Sidearms SET officerId=NULL WHERE serialNo=" + i.serialNo)
+        raise web.seeother('/equipment')
+
+class deleteRadio:
+    def POST(self):
+        i = web.input()
+        db.query("DELETE FROM Radios WHERE radioId=" + i.radioId)
+        raise web.seeother('/equipment')
+
+class deleteCruiser:
+    def POST(self):
+        i = web.input()
+        db.query("DELETE FROM Cruisers WHERE vin=" + i.vin)
+        raise web.seeother('/equipment')
+
+class deleteSidearm:
+    def POST(self):
+        i = web.input()
+        db.query("DELETE FROM Sidearms WHERE serialNo=" + i.serialNo)
+        raise web.seeother('/equipment')
+
+class addCruiser:
+    def POST(self):
+        i = web.input()
+        n = db.insert('Cruisers', model=i.model, deptId=1)
+        raise web.seeother('/equipment')
+
+class addSidearm:
+    def POST(self):
+        i = web.input()
+        n = db.insert('Sidearms', type=i.type, deptId=1)
+        raise web.seeother('/equipment')
+
+class addRadio:
+    def POST(self):
+        i = web.input()
+        n = db.insert('Radios', deptId=1)
+        raise web.seeother('/equipment')
 
 
 if __name__ == "__main__":
