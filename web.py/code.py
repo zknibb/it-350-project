@@ -218,7 +218,10 @@ class addSus:
     def POST(self):
         i = web.input()
         n = db.insert('Suspect', name=i.name, address=i.addr, caseNo=i.caseNo)
-        y = db.insert('AttachedTo', susId=i.susId, caseNo=i.caseNo)
+        id = db.query("SELECT susId FROM Suspect WHERE name='" + i.name + "' AND address='" + i.addr + "' AND caseNo=" + i.caseNo)
+        for entry in id:
+            y = db.insert('AttachedTo', susId=entry.susId, caseNo=i.caseNo)
+            break
         raise web.seeother('/suspidence')
 
 class addEv:
@@ -230,6 +233,7 @@ class addEv:
 class removeSus:
     def POST(self):
         i = web.input()
+        db.query("DELETE FROM AttachedTo WHERE susId=" + i.susId)
         db.query("DELETE FROM Suspect WHERE susId=" + i.susId)
         raise web.seeother('/suspidence')
 

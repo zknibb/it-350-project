@@ -81,7 +81,7 @@ CREATE TABLE `Cases` (
   `offense` varchar(255) DEFAULT NULL,
   `solved` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`caseNo`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,7 +90,7 @@ CREATE TABLE `Cases` (
 
 LOCK TABLES `Cases` WRITE;
 /*!40000 ALTER TABLE `Cases` DISABLE KEYS */;
-INSERT INTO `Cases` VALUES (1,'Larceny',0);
+INSERT INTO `Cases` VALUES (1,'Larceny',0),(2,'Homicide',1);
 /*!40000 ALTER TABLE `Cases` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -174,7 +174,7 @@ CREATE TABLE `Divisions` (
 
 LOCK TABLES `Divisions` WRITE;
 /*!40000 ALTER TABLE `Divisions` DISABLE KEYS */;
-INSERT INTO `Divisions` VALUES ('Traffic',1);
+INSERT INTO `Divisions` VALUES ('Drug Enforcement',1),('SWAT',1),('Theft',1),('Traffic',1),('Zack',1);
 /*!40000 ALTER TABLE `Divisions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -192,7 +192,7 @@ CREATE TABLE `Evidence` (
   PRIMARY KEY (`evId`),
   KEY `caseNo` (`caseNo`),
   CONSTRAINT `Evidence_ibfk_1` FOREIGN KEY (`caseNo`) REFERENCES `Cases` (`caseNo`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -217,7 +217,7 @@ CREATE TABLE `Incidents` (
   `description` varchar(255) NOT NULL,
   `location` varchar(400) DEFAULT NULL,
   PRIMARY KEY (`incidentId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -226,7 +226,7 @@ CREATE TABLE `Incidents` (
 
 LOCK TABLES `Incidents` WRITE;
 /*!40000 ALTER TABLE `Incidents` DISABLE KEYS */;
-INSERT INTO `Incidents` VALUES (1,'Bar Fight','McLaren\'s');
+INSERT INTO `Incidents` VALUES (1,'Bar Fight','McLaren\'s'),(2,'Breaking and entering','CTB');
 /*!40000 ALTER TABLE `Incidents` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -241,8 +241,9 @@ CREATE TABLE `Leadership` (
   `empId` int(11) NOT NULL AUTO_INCREMENT,
   `lastName` varchar(255) DEFAULT NULL,
   `firstName` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`empId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -251,7 +252,7 @@ CREATE TABLE `Leadership` (
 
 LOCK TABLES `Leadership` WRITE;
 /*!40000 ALTER TABLE `Leadership` DISABLE KEYS */;
-INSERT INTO `Leadership` VALUES (1,'Root','Julius');
+INSERT INTO `Leadership` VALUES (1,'Root','Julius','Chief'),(2,'Gordon','Jim','Commissioner');
 /*!40000 ALTER TABLE `Leadership` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -271,7 +272,7 @@ CREATE TABLE `Officers` (
   PRIMARY KEY (`officerId`),
   KEY `title` (`title`),
   CONSTRAINT `Officers_ibfk_1` FOREIGN KEY (`title`) REFERENCES `Divisions` (`title`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -280,7 +281,7 @@ CREATE TABLE `Officers` (
 
 LOCK TABLES `Officers` WRITE;
 /*!40000 ALTER TABLE `Officers` DISABLE KEYS */;
-INSERT INTO `Officers` VALUES (22,'Jones','Robert','Officer','Traffic');
+INSERT INTO `Officers` VALUES (22,'Jones','Robert','Officer','Traffic'),(26,'Johnson','Cliff','Officer','Theft'),(27,'Satchwell','Tanner','Sergeant','Zack');
 /*!40000 ALTER TABLE `Officers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -427,8 +428,11 @@ CREATE TABLE `Suspect` (
   `susId` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(400) NOT NULL,
   `address` varchar(400) DEFAULT NULL,
-  PRIMARY KEY (`susId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `caseNo` int(11) DEFAULT NULL,
+  PRIMARY KEY (`susId`),
+  KEY `caseNo` (`caseNo`),
+  CONSTRAINT `Suspect_ibfk_1` FOREIGN KEY (`caseNo`) REFERENCES `Cases` (`caseNo`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -437,7 +441,7 @@ CREATE TABLE `Suspect` (
 
 LOCK TABLES `Suspect` WRITE;
 /*!40000 ALTER TABLE `Suspect` DISABLE KEYS */;
-INSERT INTO `Suspect` VALUES (1,'Hamburglar','12345 McDonald Way');
+INSERT INTO `Suspect` VALUES (1,'Hamburglar','12345 McDonald Way',1);
 /*!40000 ALTER TABLE `Suspect` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -455,7 +459,7 @@ CREATE TABLE `todo` (
   `done` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -464,7 +468,7 @@ CREATE TABLE `todo` (
 
 LOCK TABLES `todo` WRITE;
 /*!40000 ALTER TABLE `todo` DISABLE KEYS */;
-INSERT INTO `todo` VALUES (21,'dfslkj','2017-03-29 20:36:41',1),(24,'monkey','2017-03-29 20:36:48',0),(25,'still wrosk','2017-03-29 21:03:17',0),(28,'hmmdjslakfjasd','2017-03-29 21:26:36',0),(29,'zac','2017-04-04 23:46:23',0);
+INSERT INTO `todo` VALUES (25,'still wrosk','2017-03-29 21:03:17',0),(28,'hmmdjslakfjasd','2017-03-29 21:26:36',0),(29,'zac','2017-04-04 23:46:23',0),(30,'fjdsadjklasd','2017-04-05 00:42:21',0);
 /*!40000 ALTER TABLE `todo` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -477,4 +481,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-04 17:51:33
+-- Dump completed on 2017-04-12 14:40:08

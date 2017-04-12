@@ -80,12 +80,12 @@ $def with (respond, officers, incidents)
     <form method="post" action="addResponse" id="addResponse">
         <select form="addResponse" name="offi">
             $for off in officers:
-            <option value="$off.officerId">$off.officerId</option>
+            <option value="$off.officerId">$off.officerId - $off.lastName</option>
         </select>
     
         <select form="addResponse" name="inci">
             $for inc in incidents:
-            <option value="$inc.incidentId">$inc.incidentId</option>
+            <option value="$inc.incidentId">$inc.incidentId - $inc.description</option>
         </select>
         <input type="submit" value="Add" />
     </form>

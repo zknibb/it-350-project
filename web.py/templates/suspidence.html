@@ -86,10 +86,7 @@ $def with (sus,evi,case)
     <form method="post" action="addSus" id="addSus">
         <input type="text" name="name" placeholder="Suspect name" /> 
         <input type="text" name="addr" placeholder="Address" />
-        <select form="addSus" name="caseNo">
-            $for record in case:
-            <option value="$record.caseNo">$record.caseNo</option>
-        </select>
+        <input type="text" name="caseNo" placeholder="Case number" />
         <input type="submit" value="Add" />
     </form>
 </div>
@@ -127,10 +124,7 @@ $for entry in evi:
 <div class="center">
     <form method="post" action="addEv" id="addEv">
         <input type="text" name="desc" placeholder="Description" /> 
-         <select form="addEv" name="caseNo">
-            $for record in case:
-            <option value="$record.caseNo">$record.caseNo</option>
-        </select>
+        <input type="text" name="caseNo" placeholder="Case number" />
         <input type="submit" value="Add" />
     </form>
 </div>

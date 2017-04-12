@@ -80,12 +80,12 @@ $def with (assign, detect, case)
     <form method="post" action="addAssignment" id="addAssignment">
         <select form="addAssignment" name="badgeNo">
             $for det in detect:
-            <option value="$det.badgeNo">$det.badgeNo</option>
+            <option value="$det.badgeNo">$det.badgeNo - $det.lastName</option>
         </select>
     
         <select form="addAssignment" name="caseNo">
             $for cas in case:
-            <option value="$cas.caseNo">$cas.caseNo</option>
+            <option value="$cas.caseNo">$cas.caseNo - $cas.offense</option>
         </select>
         <input type="submit" value="Add" />
     </form>
