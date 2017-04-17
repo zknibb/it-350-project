@@ -58,8 +58,6 @@ $def with (case,sus,evi)
       <tr>
         <th>Case ID</th>
         <th>Offense</th>
-        <th>Suspects</th>
-        <th>Evidence</th>
         <th>Solved</th>
       </tr>
     </thead>
@@ -68,14 +66,6 @@ $def with (case,sus,evi)
         <tr id="row$entry.caseNo">
             <td>$entry.caseNo</td>
             <td>$entry.offense</td>
-            <td>
-                $for list in sus:
-                    $list.susId
-            </td>
-            <td>
-                $for more in evi:
-                    $more.evId
-            </td>
             $if (entry.solved == 0):
                 <td>No</td>
             $else:
